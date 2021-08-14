@@ -1,9 +1,8 @@
-import Vue from 'vue'
 import Toast from './Toast'
 
 const obj = {}
 
-obj.install = function () {
+obj.install = function (Vue) {
   // 1.创建组件构造器
   const toastConstructor = Vue.extend(Toast)
 

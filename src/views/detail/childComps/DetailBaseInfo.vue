@@ -1,24 +1,22 @@
 <template>
   <div v-if="Object.keys(goods).length !== 0" class="base-info">
-    <div class="info-title">{{ goods.title }}</div>
-    <div class="info-price">
-      <span class="n-price">{{ goods.newPrice }}</span>
-      <span class="o-price">{{ goods.oldPrice }}</span>
-      <span v-if="goods.discount" class="discount">{{ goods.discount }}</span>
+    <div class="title">
+      {{ goods.title }}
     </div>
-    <div class="info-other">
+    <div class="price">
+      <span>{{ goods.price }}</span>
+      <span>{{ goods.oldPrice }}</span>
+      <span v-if="goods.discountDesc">{{ goods.discountDesc }}</span>
+    </div>
+    <div class="info">
       <span>{{ goods.columns[0] }}</span>
       <span>{{ goods.columns[1] }}</span>
       <span>{{ goods.services[goods.services.length - 1].name }}</span>
     </div>
-    <div class="info-service">
-      <span
-        class="info-service-item"
-        v-for="index in goods.services.length - 1"
-        :key="index"
-      >
-        <img :src="goods.services[index - 1].icon" alt="" />
-        <span>{{ goods.services[index - 1].name }}</span>
+    <div class="other">
+      <span v-for="index in goods.services.length - 1" :key="index">
+        <img :src="goods.services[index].icon" alt="" />
+        {{ goods.services[index - 1].name }}
       </span>
     </div>
   </div>
@@ -40,68 +38,56 @@ export default {
 
 <style scoped>
 .base-info {
-  margin-top: 15px;
-  padding: 0 8px;
-  color: #999;
-  border-bottom: 5px solid #f2f5f8;
+  padding: 15px 5px;
 }
-
-.info-title {
-  color: #222;
+.title {
+  font-weight: 500;
+  color: #000;
 }
-
-.info-price {
-  margin-top: 10px;
+.price {
+  margin: 8px 0;
 }
-
-.info-price .n-price {
+.price span:first-child {
   font-size: 24px;
+  font-weight: 500;
   color: var(--color-high-text);
 }
-
-.info-price .o-price {
-  font-size: 13px;
+.price span:nth-child(2) {
   margin-left: 5px;
+  font-size: 12px;
+  color: #9e9ea0;
   text-decoration: line-through;
 }
-
-.info-price .discount {
-  font-size: 12px;
-  padding: 2px 5px;
-  color: #fff;
-  background-color: var(--color-high-text);
-  border-radius: 8px;
-  margin-left: 5px;
-
-  /*让元素上浮一些: 使用相对定位即可*/
+.price span:nth-child(3) {
   position: relative;
-  top: -8px;
+  top: -7px;
+  left: 5px;
+  padding: 2px 5px;
+  font-size: 10px;
+  color: #fff;
+  border-radius: 10px;
+  background-color: var(--color-high-text);
 }
-
-.info-other {
-  margin-top: 15px;
-  line-height: 30px;
+.info {
   display: flex;
+  justify-content: space-between;
+  line-height: 30px;
   font-size: 13px;
   border-bottom: 1px solid rgba(100, 100, 100, 0.1);
-  justify-content: space-between;
 }
-
-.info-service {
+.info span {
+  font-size: 14px;
+  color: #b2b2b3;
+}
+.other {
   display: flex;
   justify-content: space-between;
-  line-height: 60px;
+  padding: 15px 0;
+  font-size: 14px;
 }
-
-.info-service-item img {
-  width: 14px;
-  height: 14px;
-  position: relative;
-  top: 2px;
-}
-
-.info-service-item span {
-  font-size: 13px;
-  color: #333;
+.other img {
+  width: 15px;
+  height: 15px;
+  vertical-align: bottom;
 }
 </style>

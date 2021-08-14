@@ -3,9 +3,9 @@
     <div
       v-for="(item, index) in titles"
       :key="item"
-      class="tab-control-item"
-      @click="itemClick(index)"
+      class="tab-item"
       :class="{ active: currentIndex === index }"
+      @click="itemClick(index)"
     >
       <span>{{ item }}</span>
     </div>
@@ -15,6 +15,11 @@
 <script>
 export default {
   name: "TabControl",
+  data() {
+    return {
+      currentIndex: 0,
+    };
+  },
   props: {
     titles: {
       type: Array,
@@ -22,11 +27,6 @@ export default {
         return [];
       },
     },
-  },
-  data() {
-    return {
-      currentIndex: 0,
-    };
   },
   methods: {
     itemClick(index) {
@@ -40,22 +40,22 @@ export default {
 <style scoped>
 .tab-control {
   display: flex;
-  height: 40px;
-  line-height: 40px;
+  height: 44px;
+  line-height: 44px;
+  font-size: 14px;
   text-align: center;
-  font-size: 15px;
   background-color: #fff;
 }
-.tab-control-item {
+.tab-item {
   flex: 1;
 }
-.tab-control-item span {
-  padding: 5px;
+.tab-item span {
+  padding: 5px 8px;
 }
 .active {
   color: var(--color-high-text);
 }
 .active span {
-  border-bottom: 3px solid var(--color-high-text);
+  border-bottom: 3px solid var(--color-tint);
 }
 </style>

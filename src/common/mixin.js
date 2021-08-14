@@ -1,40 +1,36 @@
 import {
   debounce
-} from "./utils"
-import BackTop from "components/content/backTop/BackTop";
+} from "common/utils"
+import BackTop from "components/content/backTop/BackTop.vue";
 
 export const itemListenerMixin = {
   data() {
     return {
-      itemImgListener: null,
+      itemImgLoad: null,
       refresh: null
     }
   },
   mounted() {
-    this.refresh = debounce(this.$refs.scroll.refresh, 100)
-    this.itemImgListener = () => {
-      this.refresh()
-    }
-    this.$bus.$on("itemImageLoad", this.itemImgListener)
-    // console.log('我是混入中的内容');
+    this.refresh = debounce(this.$refs.scroll.refresh, 100);
+    this.itemImgLoad = () => {
+      this.refresh();
+    };
+    this.$bus.$on("itemImageLoad", this.itemImgLoad);
   }
 }
 
 export const backTopMixin = {
   components: {
-    BackTop
+    BackTop,
   },
   data() {
     return {
-      isShowBackTop: false
+      isShowBackTop: false,
     }
   },
   methods: {
     backClick() {
-      this.$refs.scroll.scrollTo(0, 0, 300)
-    },
-    listenShowBackTop(position) {
-      this.isShowBackTop = -position.y > 1000
+      this.$refs.scroll.scrollTo(0, 0, 500);
     }
   }
 }

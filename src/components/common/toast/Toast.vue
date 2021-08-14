@@ -1,34 +1,25 @@
 <template>
-  <div class="toast" v-show="isShow">
-    <div>{{ message }}</div>
-  </div>
+  <div class="toast" v-show="isShow">{{ message }}</div>
 </template>
 
 <script>
 export default {
   name: "Toast",
-  props: {
-    // message: {
-    //   type: String,
-    //   default: "",
-    // },
-    // show: {
-    //   type: Boolean,
-    //   default: false,
-    // },
-  },
   data() {
     return {
       message: "",
       isShow: false,
+      timer: null,
     };
   },
   methods: {
-    show(message, duration = 2000) {
-      this.isShow = true;
-      this.message = message;
+    show(message, duration = 1500) {
+      if (this.timer) clearTimeout(this.timer);
 
-      setTimeout(() => {
+      this.message = message;
+      this.isShow = true;
+
+      this.timer = setTimeout(() => {
         this.isShow = false;
         this.message = "";
       }, duration);
@@ -44,8 +35,9 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 8px 10px;
-  z-index: 999;
+  background-color: rgba(100, 100, 100, 0.75);
   color: #fff;
-  background-color: rgba(0, 0, 0, 0.75);
+  border-radius: 5px;
+  z-index: 999;
 }
 </style>

@@ -1,41 +1,37 @@
 <template>
   <div class="shop-info">
-    <div class="shop-top">
-      <img :src="shop.logo" />
-      <span class="title">{{ shop.name }}</span>
+    <div class="name">
+      <img :src="shop.shopLogo" alt="" />
+      <span>{{ shop.name }}</span>
     </div>
-    <div class="shop-middle">
-      <div class="shop-middle-item shop-middle-left">
-        <div class="info-sells">
-          <div class="sells-count">
-            {{ shop.sells | sellCountFilter }}
-          </div>
-          <div class="sells-text">总销量</div>
-        </div>
-        <div class="info-goods">
-          <div class="goods-count">
-            {{ shop.goodsCount }}
-          </div>
-          <div class="goods-text">全部宝贝</div>
-        </div>
+    <div class="count-score">
+      <div class="sell">
+        <span class="big-num">{{ (shop.cSells / 10000).toFixed(1) }}万</span>
+        <span>总销量</span>
       </div>
-      <div class="shop-middle-item shop-middle-right">
-        <table>
-          <tr v-for="(item, index) in shop.score" :key="index">
-            <td>{{ item.name }}</td>
-            <td class="score" :class="{ 'score-better': item.isBetter }">
-              {{ item.score }}
-            </td>
-            <td class="better" :class="{ 'better-more': item.isBetter }">
-              <span>{{ item.isBetter ? "高" : "低" }}</span>
-            </td>
-          </tr>
-        </table>
+      <div class="goods">
+        <span class="big-num">{{ shop.cGoods }}</span>
+        <span>全部宝贝</span>
       </div>
+      <div class="lineitem"></div>
+      <table>
+        <tr v-for="item in shop.score" :key="item.name">
+          <td>{{ item.name }}</td>
+          <td :style="{ color: item.isBetter ? 'orangered' : '#5ea732' }">
+            {{ item.score }}
+          </td>
+          <td>
+            <span
+              :style="{
+                backgroundColor: item.isBetter ? 'orangered' : '#5ea732',
+              }"
+              >{{ item.isBetter ? "高" : "低" }}</span
+            >
+          </td>
+        </tr>
+      </table>
     </div>
-    <div class="shop-bottom">
-      <div class="enter-shop">进店逛逛</div>
-    </div>
+    <div class="goshop"><div>进店逛逛</div></div>
   </div>
 </template>
 
@@ -50,114 +46,63 @@ export default {
       },
     },
   },
-  filters: {
-    sellCountFilter: function (value) {
-      if (value < 10000) return value;
-      return (value / 10000).toFixed(1) + "万";
-    },
-  },
 };
 </script>
 
 <style scoped>
 .shop-info {
-  padding: 25px 8px;
-  border-bottom: 5px solid #f2f5f8;
+  padding: 8px 5px;
+  color: #000;
+  font-size: 16px;
+  border-bottom: 2px solid #eee;
 }
-
-.shop-top {
-  line-height: 45px;
-  /* 让元素垂直中心对齐 */
+.name img {
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  border: 1px solid #ccc;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+.count-score {
+  margin: 8px;
   display: flex;
+  justify-content: space-around;
+  font-size: 14px;
+}
+.sell,
+.goods {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-}
-
-.shop-top img {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.shop-top .title {
-  margin-left: 10px;
-  vertical-align: center;
-}
-
-.shop-middle {
-  margin-top: 15px;
-  display: flex;
-  align-items: center;
-}
-
-.shop-middle-item {
-  flex: 1;
-}
-
-.shop-middle-left {
-  display: flex;
-  justify-content: space-evenly;
-  color: #333;
-  text-align: center;
-  border-right: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.sells-count,
-.goods-count {
-  font-size: 18px;
-}
-
-.sells-text,
-.goods-text {
-  margin-top: 10px;
+  justify-content: center;
   font-size: 12px;
 }
-
-.shop-middle-right {
-  font-size: 13px;
-  color: #333;
+.big-num {
+  font-size: 18px;
+  font-weight: 540;
+  margin-bottom: 8px;
 }
-
-.shop-middle-right table {
-  width: 120px;
-  margin-left: 30px;
+.count-score td {
+  padding: 5px;
 }
-
-.shop-middle-right table td {
-  padding: 5px 0;
-}
-
-.shop-middle-right .score {
-  color: #5ea732;
-}
-
-.shop-middle-right .score-better {
-  color: #f13e3a;
-}
-
-.shop-middle-right .better span {
-  background-color: #5ea732;
+.count-score tr td:nth-child(3) {
   color: #fff;
+}
+.lineitem {
+  margin: 20px 0;
+  border-left: 1px solid #ddd;
+}
+.goshop {
   text-align: center;
 }
-
-.shop-middle-right .better-more span {
-  background-color: #f13e3a;
-}
-
-.shop-bottom {
-  text-align: center;
-  margin-top: 10px;
-}
-
-.enter-shop {
+.goshop div {
   display: inline-block;
-  font-size: 14px;
-  background-color: #f2f5f8;
   width: 150px;
-  height: 30px;
-  text-align: center;
-  line-height: 30px;
+  margin-bottom: 15px;
+  padding: 5px;
+  font-size: 15px;
+  background-color: #f2f2f2;
   border-radius: 10px;
 }
 </style>
